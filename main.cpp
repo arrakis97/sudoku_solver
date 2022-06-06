@@ -3,7 +3,8 @@ const int N = 9;
 
 using namespace std;
 
-// https://www.sudokuwiki.org/Weekly_Sudoku.asp?puz=28
+// Website where I got this specific sudoku from: https://www.sudokuwiki.org/Weekly_Sudoku.asp?puz=28
+// A zero represents an empty cell
 int grid [N][N] = {
         {6, 0, 0, 0, 0, 8, 9, 4, 0},
         {9, 0, 0, 0, 0, 6, 1, 0, 0},
@@ -16,6 +17,7 @@ int grid [N][N] = {
         {8, 0, 0, 0, 0, 1, 6, 0, 0}
 };
 
+// Displays the solved sudoku
 void print_sudoku() {
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
@@ -25,6 +27,7 @@ void print_sudoku() {
     }
 }
 
+// Checks if there are any zeros left in the grid
 bool no_zeros(int &row, int &col) {
     for (row = 0; row < N; row++) {
         for (col = 0; col < N; col++) {
@@ -36,6 +39,7 @@ bool no_zeros(int &row, int &col) {
     return false;
 }
 
+// Checks if a specific number is in a specific column
 bool num_in_col(int &col, int &num) {
     for (int row = 0; row < N; row++) {
         if (grid [row][col] == num) {
@@ -45,6 +49,7 @@ bool num_in_col(int &col, int &num) {
     return false;
 }
 
+// Checks if a specific number is in a specific row
 bool num_in_row(int &row, int &num) {
     for (int col = 0; col < N; col++) {
         if (grid [row][col] == num) {
@@ -54,6 +59,7 @@ bool num_in_row(int &row, int &num) {
     return false;
 }
 
+// Checks if the given number can already be found in its 3x3 box
 bool num_in_box(int &num_row, int &num_col, int &num) {
     int begin_row = num_row - num_row % 3;
     int begin_col = num_col - num_col % 3;
@@ -67,6 +73,7 @@ bool num_in_box(int &num_row, int &num_col, int &num) {
     return false;
 }
 
+// Checks if the cell is a valid cell
 bool check_valid(int row, int col, int num) {
     if (num_in_row(row, num) || num_in_col(col, num) || num_in_box(row, col, num)) {
         return false;
@@ -74,6 +81,7 @@ bool check_valid(int row, int col, int num) {
     return true;
 }
 
+// Recursively solves the sudoku
 bool solve_sudoku() {
     int row, col;
     if (!no_zeros(row, col)) {
@@ -91,6 +99,7 @@ bool solve_sudoku() {
     return false;
 }
 
+// Display the solved sudoku
 int main() {
     if (solve_sudoku()) {
         cout << "Sudoku solved!\n";
